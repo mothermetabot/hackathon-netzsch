@@ -1,0 +1,77 @@
+﻿<Window x:Class="ChatLab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatLab"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="ChatLab.Win"
+        lex:ResxLocalizationProvider.DefaultDictionary="Resources"
+        mc:Ignorable="d"
+        xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="{lex:BLoc Key=ApplicationName}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        WindowStartupLocation="CenterScreen"
+        Height="450"
+        Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonIconStyle"
+                   TargetType="mat:PackIcon">
+                <Setter Property="Height"
+                        Value="24" />
+                <Setter Property="Width"
+                        Value="24" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+            <Style TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Width"
+                        Value="100" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            <Grid x:Name="ButtonGrid"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="StartButton"
+                        Grid.Column="0">
+                    <DockPanel>
+                        <mat:PackIcon Kind="Play"
+                                      Style="{StaticResource ButtonIconStyle}"
+                                      DockPanel.Dock="Left" />
+                        <TextBlock Text="{lex:BLoc Key=Start}"
+                                   DockPanel.Dock="Left" />
+                    </DockPanel>
+                </Button>
+                <Button x:Name="StopButton"
+                        Grid.Column="2">
+                    <DockPanel>
+                        <mat:PackIcon Kind="Stop"
+                                      Style="{StaticResource ButtonIconStyle}"
+                                      DockPanel.Dock="Left" />
+                        <TextBlock Text="{lex:BLoc Key=Stop}"
+                                   DockPanel.Dock="Left" />
+                    </DockPanel>
+                </Button>
+            </Grid>
+        </DockPanel>
+
+    </Grid>
+</Window>
