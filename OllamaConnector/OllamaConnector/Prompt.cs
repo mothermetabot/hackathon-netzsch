@@ -17,7 +17,7 @@ public static class Prompt
     static Prompt()
     {
         _httpClient = new(){
-            Timeout = Timeout.InfiniteTimeSpan
+            Timeout = TimeSpan.FromMinutes(10)
         };
     }
 
