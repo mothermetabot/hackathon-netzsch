@@ -10,6 +10,8 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Resources"
         mc:Ignorable="d"
         xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:ChatLab.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         Title="{lex:BLoc Key=ApplicationName}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -40,7 +42,7 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
@@ -102,7 +104,10 @@
                 </Button>
             </Grid>
         </DockPanel>
-        <Border Grid.Column="1">
+        <Border Grid.Column="1"
+                Width="{Binding ChatWidth}"
+                BorderThickness="1"
+                BorderBrush="#FF009384">
             <Grid x:Name="ChatGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition />
