@@ -21,6 +21,8 @@ public static class Prompt
         var httpContent = JsonContent.Create(request, options: Options);
         var response = await _httpClient.PostAsync(URL, httpContent);
 
+        response.EnsureSuccessStatusCode();
+
         var json = await response.Content.ReadAsStringAsync();
         System.Console.WriteLine($"Response json: {json}");
 
@@ -38,9 +40,18 @@ public static class Prompt
     /// Sends initial prompt.
     /// </summary>
     /// <returns></returns>
-    public static async Task Initialize()
-    {
-        var (response, _) = await SendAsync(INITIAL_PROMPT);
+    public static async Task<string> Initialize()
+    {        
+        const string fallback="Hello, how may I assist you?";
+        var (raw, _) = await SendAsync(INITIAL_PROMPT);
+
+        if(raw == null)  return fallback;
+
+        var response = JsonSerializer.Deserialize<InfoResponse>(raw.Response, Options);
+
+        if(response == null) return fallback;
+
+        return response.Params;
     }
 
     private static void BuildContext(RawResponse response)
@@ -57,9 +68,11 @@ public static class Prompt
     {
         var (response, json) = await SendAsync(prompt);
 
+        if(response == null) throw new ApplicationException();
+
         var baseObj = JsonSerializer.Deserialize<ResponseBase>(response.Response, Options);
 
-
+        
         if(baseObj != null)
             baseObj._internalJson = json;
 
@@ -94,8 +107,7 @@ You will receive queries regarding DSC measurements, and you should respond **on
     ""type"": ""start"",
     ""params"": [
         // The previously provided list of steps.
-    ],
-    ""context"": ""// Additional information if no 'define' command was sent before.""
+    ]
 }
 
 
@@ -144,6 +156,7 @@ You will receive queries regarding DSC measurements, and you should respond **on
 **Important Guidelines:**
 
 - **Your first answer to this prompt must comply with the guidelines below**.
+- All information you send must be in a json object.
 - **Respond exclusively in JSON format** as specified above.
 - **Do not include any free text** outside the JSON structures.
 - Ensure all numerical values are accurate and units are consistent.
