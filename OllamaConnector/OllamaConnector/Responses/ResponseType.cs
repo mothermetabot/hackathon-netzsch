@@ -1,3 +1,5 @@
+namespace OllamaConnector.Responses;
+
 public readonly struct PromptType {
     public const string START = "start";
 
@@ -5,5 +7,5 @@ public readonly struct PromptType {
 
     public const string DEFINE = "define";
 
-    public const string CLARIFICATION = "clarification";
+    public const string INFORMATION = "information";
 }
