@@ -3,6 +3,7 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reactive;
@@ -40,8 +41,8 @@ namespace ChatLab.ViewModels
 
     public class ChatResponseModel : ReactiveObject
     {
-        [Reactive] public string MessageId { get; }
-        [Reactive] public object Response { get; }
+        [Reactive] public string MessageId { get; set; }
+        [Reactive] public object Response { get; set; }
     }
 
     public class MainViewModel : ReactiveObject, IActivatableViewModel
@@ -54,7 +55,7 @@ namespace ChatLab.ViewModels
         public ReactiveCommand<Unit, Unit> OpenChatCommand { get; }
         public ReactiveCommand<Unit, Unit> CloseChatCommand { get; }
 
-        public ReactiveCommand<Unit, Unit> SendMessage { get; }
+        public ReactiveCommand<Unit, Unit> SendMessageCommand { get; }
 
         #endregion
 
@@ -83,11 +84,17 @@ namespace ChatLab.ViewModels
             StopCommand = ReactiveCommand.Create(StopMeasurement);
             OpenChatCommand = ReactiveCommand.Create(OpenChat);
             CloseChatCommand = ReactiveCommand.Create(CloseChat);
+            SendMessageCommand = ReactiveCommand.Create(SendMessage);
 
             this.WhenActivated((CompositeDisposable disposables) =>
             {
 
             });
+        }
+
+        private void SendMessage()
+        {
+            Debug.WriteLine("Sending Message");
         }
 
         #region 
@@ -96,26 +103,31 @@ namespace ChatLab.ViewModels
 
         private void OpenChat()
         {
+            Debug.WriteLine("Opening Chat");
+
             IsChatVisible = true;
             // establish connection here?
         }
 
         private void CloseChat()
         {
+            Debug.WriteLine("Closing Chat");
+
             IsChatVisible = false;
             // close connection here?
         }
 
         private void StopMeasurement()
         {
-            throw new NotImplementedException();
+            Debug.WriteLine("Starting Measurement");
+
         }
 
         private void StartMeasurement()
         {
-            throw new NotImplementedException();
-        }
+            Debug.WriteLine("Stopping Measurement");
 
+        }
 
     }
 }

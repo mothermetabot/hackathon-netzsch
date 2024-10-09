@@ -70,6 +70,33 @@ namespace ChatLab.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Chat.
+        /// </summary>
+        public static string CloseChat {
+            get {
+                return ResourceManager.GetString("CloseChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Chat.
+        /// </summary>
+        public static string OpenChat {
+            get {
+                return ResourceManager.GetString("OpenChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Message.
+        /// </summary>
+        public static string SendMessage {
+            get {
+                return ResourceManager.GetString("SendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Plot.
         /// </summary>
         public static string ShowPlot {

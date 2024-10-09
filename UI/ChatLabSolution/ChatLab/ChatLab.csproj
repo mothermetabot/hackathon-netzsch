@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\OllamaConnector\OllamaConnector\OllamaConnector.csproj" />
     <ProjectReference Include="..\ChatLab.Win\ChatLab.Win.csproj" />
   </ItemGroup>
 

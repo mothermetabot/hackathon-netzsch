@@ -133,4 +133,13 @@
     <value>Show Plot</value>
     <comment>label</comment>
   </data>
+  <data name="OpenChat" xml:space="preserve">
+    <value>Open Chat</value>
+  </data>
+  <data name="CloseChat" xml:space="preserve">
+    <value>Close Chat</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using ChatLab.ViewModels;
 using ReactiveUI;
+using System.Reactive.Disposables;
 using System.Windows;
 
 namespace ChatLab
@@ -16,8 +17,33 @@ namespace ChatLab
             ViewModel = new MainViewModel();
             DataContext = ViewModel;
 
-            ///TODO: binding of commands goes here
+            this.WhenActivated((CompositeDisposable disposables) =>
+            {
+                this.BindCommand(ViewModel,
+                    vm => vm.StartCommand,
+                    v => v.StartButton).
+                    DisposeWith(disposables);
 
+                this.BindCommand(ViewModel,
+                    vm => vm.StopCommand,
+                    v => v.StopButton).
+                    DisposeWith(disposables);
+
+                this.BindCommand(ViewModel,
+                    vm => vm.OpenChatCommand,
+                    v => v.OpenChatButton).
+                    DisposeWith(disposables);
+
+                this.BindCommand(ViewModel,
+                    vm => vm.CloseChatCommand,
+                    v => v.CloseChatButton).
+                    DisposeWith(disposables);
+
+                this.BindCommand(ViewModel,
+                    vm => vm.SendMessageCommand,
+                    v => v.SendMessageButton).
+                    DisposeWith(disposables);
+            });
         }
 
         public MainViewModel ViewModel
