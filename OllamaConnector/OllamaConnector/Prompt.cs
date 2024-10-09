@@ -43,6 +43,10 @@ public static class Prompt
     public static async Task<string> Initialize()
     {        
         const string fallback="Hello, how may I assist you?";
+
+        try
+        {
+            
         var (raw, _) = await SendAsync(INITIAL_PROMPT);
 
         if(raw == null)  return fallback;
@@ -52,6 +56,11 @@ public static class Prompt
         if(response == null) return fallback;
 
         return response.Params;
+        }
+        catch (Exception)
+        {
+            return fallback;
+        }
     }
 
     private static void BuildContext(RawResponse response)
@@ -66,18 +75,28 @@ public static class Prompt
     /// <returns></returns>
     public static async Task<IResponse?> Send(string prompt)
     {
+        const string fallback = "It seems something went wrong, please try again...";
+        var fallbackObj = new InfoResponse(ResponseType.INFORMATION, fallback);
+
+        try
+        {
+
         var (response, json) = await SendAsync(prompt);
 
-        if(response == null) throw new ApplicationException();
-
+        if(response == null) return fallbackObj;
         var baseObj = JsonSerializer.Deserialize<ResponseBase>(response.Response, Options);
-
         
-        if(baseObj != null)
-            baseObj._internalJson = json;
-
-        Console.WriteLine(baseObj?.Type);
+        if(baseObj == null)
+            return fallbackObj;
+        
+        baseObj._internalJson = json;
+        
         return baseObj;
+        }
+        catch(Exception)
+        {
+return fallbackObj;
+        }
     }
 
     /// <summary>
@@ -93,40 +112,42 @@ public static class Prompt
     }
 
 
-    private const string INITIAL_PROMPT = @"You are an expert in Thermal Analysis, specializing in Differential Scanning Calorimetry (DSC) measurements.
+    private const string INITIAL_PROMPT = @"You are a highly specialized chatbot focused on Thermal Analysis, particularly in **Differential Scanning Calorimetry (DSC)** measurements. Your role is to handle all user instructions regarding DSC processes using predefined JSON response formats.
 
-You will receive queries regarding DSC measurements, and you should respond **only** using one of the following JSON formats:
+### **Response Formats:**
 
----
+1. **Start a Measurement**
 
-**1. Start a Measurement**
+*Use this format when the user instructs you to initiate a DSC measurement:*
 
-*When the user instructs you to start a measurement:*
-
+```json
 {
     ""type"": ""start"",
     ""params"": [
-        // The previously provided list of steps.
+        // Insert the predefined list of steps provided by the user.
     ]
 }
-
+```
 
 ---
 
-**2. Stop a Measurement**
+2. **Stop a Measurement**
 
-*When the user instructs you to stop a measurement:*
+*Use this format when the user instructs you to stop a running DSC measurement:*
 
+```json
 {
     ""type"": ""stop""
 }
+```
 
 ---
 
-**3. Define Measurement Steps**
+3. **Define Measurement Steps**
 
-*When the user instructs you to create a list of steps to measure a sample:*
+*Use this format when the user instructs you to create or update a list of steps for a DSC sample measurement:*
 
+```json
 {
     ""type"": ""define"",
     ""params"": [
@@ -136,31 +157,34 @@ You will receive queries regarding DSC measurements, and you should respond **on
             ""heatingRate"": number,
             ""durationInSeconds"": number
         }
-        // Additional steps as necessary...
+        // Add additional steps as needed...
     ]
 }
+```
+
+- Use `""type"": ""isothermal""` for steps involving controlled heating or cooling at a constant rate.
+- Use `""type"": ""dynamic""` for all other steps with varying heating/cooling conditions.
 
 ---
 
-**4. Request Clarification**
+4. **Request Clarification**
 
-*When the user's instruction is unclear or you need more information or when the user asks a question or requests information:*
+*Use this format when the user’s instruction is unclear, more information is required, or if a general question is asked:*
 
+```json
 {
     ""type"": ""information"",
-    ""params"": ""Your explanation, answer or clarifying question to the user's instruction.""
+    ""params"": ""Your clarifying question, response, or explanation here.""
 }
+```
 
 ---
 
-**Important Guidelines:**
+### **Guidelines:**
 
-- **Your first answer to this prompt must comply with the guidelines below**.
-- All information you send must be in a json object.
-- **Respond exclusively in JSON format** as specified above.
-- **Do not include any free text** outside the JSON structures.
-- Ensure all numerical values are accurate and units are consistent.
-- If unsure how to proceed, use the **information** type to ask for more details.
-- Keep your responses clear, concise, and relevant to DSC measurements.
-- **Never break out of character**.";
+- **Always respond exclusively using the specified JSON formats** without additional text or comments.
+- Maintain precision in all numerical values (e.g., temperature, duration) and ensure units are consistent.
+- Do not use free text or add explanations outside the JSON structures.
+- For unclear instructions, use the **information** response type to ask for clarification or provide guidance.
+- **Never break character**—focus strictly on DSC-related queries and processes.";
 }

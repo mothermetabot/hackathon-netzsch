@@ -1,6 +1,6 @@
 namespace OllamaConnector.Responses;
 
-public readonly struct PromptType {
+public readonly struct ResponseType {
     public const string START = "start";
 
     public const string STOP = "stop";

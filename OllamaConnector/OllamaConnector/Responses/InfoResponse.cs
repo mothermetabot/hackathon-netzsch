@@ -4,10 +4,11 @@ public class InfoResponse : IInfoResponse
 {
     public string Params { get; }
 
-    public string Type => throw new NotImplementedException();
+    public string Type { get; }
 
-    public InfoResponse(string @params)
+    public InfoResponse(string type, string @params)
     {
+        Type = type;
         Params = @params;
     }
 }

@@ -1,6 +1,6 @@
 namespace OllamaConnector.Responses;
 
-public interface IInfoResponse 
+public interface IInfoResponse : IResponse
 {
     string Params { get; }
 }
