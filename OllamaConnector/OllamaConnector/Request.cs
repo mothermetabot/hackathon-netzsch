@@ -12,7 +12,7 @@ internal record Request
 
     public bool Stream => false;
 
-    public string Model => "llama3.2:3b";
+    public string Model => "llama3.2";
 
     public IEnumerable<int> Context { get; }
 }
