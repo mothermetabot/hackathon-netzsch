@@ -2,7 +2,7 @@ namespace OllamaConnector.Responses;
 
 public readonly struct StepType 
 {
-    public const string Dynamic = "dynamic";
+    public const string DYNAMIC = "dynamic";
 
-    public const string Isothermal = "isothermal";
+    public const string ISOTHERMAL = "isothermal";
 }
