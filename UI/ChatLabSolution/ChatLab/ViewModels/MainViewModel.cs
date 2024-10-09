@@ -2,22 +2,15 @@
 using OllamaConnector.Responses;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatLab.ViewModels
 {
-    using R = ChatLab.Win.Properties.Resources;
-
     public enum ItemType
     {
         Response = 0,
@@ -38,7 +31,7 @@ namespace ChatLab.ViewModels
     public class ChatItem : ReactiveObject
     {
         [Reactive] public int Id { get; set; }
-        [Reactive] public ItemType ItemType { get; set; }
+        [Reactive] public string ItemType { get; set; }
         [Reactive] public string Text { get; set; }
     }
 
@@ -50,6 +43,9 @@ namespace ChatLab.ViewModels
 
     public class MainViewModel : ReactiveObject, IActivatableViewModel
     {
+        private const string MessageString = "Message";
+        private const string ResponseString = "Response";
+
         public ViewModelActivator Activator { get; } = new ViewModelActivator();
 
         #region Commands
@@ -101,8 +97,6 @@ namespace ChatLab.ViewModels
             CloseChatCommand = ReactiveCommand.Create(CloseChat);
             SendMessageCommand = ReactiveCommand.CreateFromTask(SendMessage, canSend);
 
-
-
             this.WhenActivated((CompositeDisposable disposables) =>
             {
                 //StartCommand.Execute().Subscribe().DisposeWith(disposables);
@@ -116,16 +110,16 @@ namespace ChatLab.ViewModels
         {
             Debug.WriteLine("Sending Message");
             IsBusy = true;
-            var response = await Prompt.Send(CurrentChatMessage.Message);
-            IsBusy = false;
             ChatItems.Add(
                         new ChatItem()
                         {
                             Id = ChatItems.Count,
-                            ItemType = ItemType.Message,
+                            ItemType = MessageString,
                             Text = CurrentChatMessage.Message,
                         });
             CurrentChatMessage.Message = string.Empty;
+            var response = await Prompt.Send(CurrentChatMessage.Message);
+            IsBusy = false;
             ParseResponse(response);
         }
 
@@ -145,7 +139,7 @@ namespace ChatLab.ViewModels
                         new ChatItem()
                         {
                             Id = ChatItems.Count,
-                            ItemType = ItemType.Response,
+                            ItemType = ResponseString,
                             Text = defString
                         });
                     break;
@@ -160,7 +154,7 @@ namespace ChatLab.ViewModels
                         new ChatItem()
                         {
                             Id = ChatItems.Count,
-                            ItemType = ItemType.Response,
+                            ItemType = ResponseString,
                             Text = infoResponse.Params
                         });
                     break;
@@ -169,7 +163,7 @@ namespace ChatLab.ViewModels
                         new ChatItem()
                         {
                             Id = ChatItems.Count,
-                            ItemType = ItemType.Response,
+                            ItemType = ResponseString,
                             Text = "Please try again, something went wrong :("
                         });
                     break;
@@ -194,7 +188,8 @@ namespace ChatLab.ViewModels
                 ChatItems.Add(new()
                 {
                     Id = ChatItems.Count,
-                    Text = firstMessage
+                    Text = firstMessage,
+                    ItemType = ResponseString
                 });
             }
         }

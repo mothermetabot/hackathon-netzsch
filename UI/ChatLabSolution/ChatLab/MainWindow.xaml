@@ -132,10 +132,42 @@
                               ItemsSource="{Binding ChatItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Text}"
-                                           TextWrapping="Wrap"/>
-                            </StackPanel>
+                            <Border CornerRadius="10"
+                                    BorderThickness="0.5"
+                                    Padding="5"
+                                    Margin="0,0,0,2"
+                                    MinWidth="100">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemType}"
+                                                         Value="Message">
+                                                <DataTrigger.Setters>
+                                                    <Setter Property="HorizontalAlignment"
+                                                            Value="Left" />
+                                                    <Setter Property="Background"
+                                                            Value="#FF8CE26D" />
+                                                </DataTrigger.Setters>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ItemType}"
+                                                         Value="Response">
+                                                <DataTrigger.Setters>
+                                                    <Setter Property="HorizontalAlignment"
+                                                            Value="Right" />
+                                                    <Setter Property="Background"
+                                                            Value="#FFBAF1EF" />
+                                                </DataTrigger.Setters>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel>
+                                    
+                                    <TextBlock Text="{Binding Text}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                            
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 
