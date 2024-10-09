@@ -16,10 +16,11 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         WindowStartupLocation="CenterScreen"
-        Height="450"
-        Width="800">
+        Height="800"
+        Width="1200">
     <Window.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <Style x:Key="ButtonIconStyle"
                    TargetType="mat:PackIcon">
                 <Setter Property="Height"
@@ -47,8 +48,14 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <ToolBarTray DockPanel.Dock="Top">
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ToolBarTray DockPanel.Dock="Top"
+                         Grid.Row="0">
                 <ToolBar>
                     <Button x:Name="OpenChatButton"
                             Grid.Column="0">
@@ -73,7 +80,12 @@
                 </ToolBar>
             </ToolBarTray>
 
+            <Image Source="{StaticResource DataImage}"
+                   Grid.Row="1"
+                   DockPanel.Dock="Top"
+                   Visibility="{Binding IsImageVisible, Converter={StaticResource BoolToVis}}" />
             <Grid x:Name="ButtonGrid"
+                  Grid.Row="2"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   DockPanel.Dock="Bottom">
@@ -103,6 +115,9 @@
                     </DockPanel>
                 </Button>
             </Grid>
+        </Grid>
+        <DockPanel >
+            
         </DockPanel>
         <Border Grid.Column="1"
                 Width="{Binding ChatWidth}"
@@ -113,12 +128,25 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ItemsControl Grid.Row="0">
+                <ItemsControl Grid.Row="0"
+                              ItemsSource="{Binding ChatItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Text}"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
                 </ItemsControl>
                 <DockPanel Grid.Row="1"
                            Margin="0,10,0,0">
-                    <TextBox DockPanel.Dock="Top" />
+                    <TextBox x:Name="ChatMessageTextBox"
+                             Text="{Binding CurrentChatMessage.Message}"
+                             DockPanel.Dock="Top"
+                             mat:HintAssist.Hint="{lex:BLoc NewMessage}"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                     <Button x:Name="SendMessageButton"
                             Grid.Column="2"
                             Margin="0,7,0,0">

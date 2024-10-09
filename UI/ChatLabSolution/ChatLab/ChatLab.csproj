@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\fancyDataImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\fancyDataImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />

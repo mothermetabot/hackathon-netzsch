@@ -6,6 +6,8 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <BitmapImage x:Key="DataImage"
+                         UriSource="Images/fancyDataImage.png" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:CustomColorTheme BaseTheme="Light"
                                                  PrimaryColor="#009384"
