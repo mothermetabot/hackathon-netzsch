@@ -7,12 +7,19 @@ namespace OllamaConnector;
 public static class Prompt
 {
     private static readonly List<int> _context = new List<int>();
-    private static HttpClient _httpClient = new();
+    private readonly static HttpClient _httpClient;
     private const string URL = "http://localhost:11434/api/generate";
     public static readonly JsonSerializerOptions Options = new JsonSerializerOptions(){
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
+
+    static Prompt()
+    {
+        _httpClient = new(){
+            Timeout = Timeout.InfiniteTimeSpan
+        };
+    }
 
     private static async Task<(RawResponse? Reponse, string json)> SendAsync(string prompt)
     {
