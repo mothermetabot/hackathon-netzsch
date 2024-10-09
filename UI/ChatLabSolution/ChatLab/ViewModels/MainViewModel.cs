@@ -67,6 +67,8 @@ namespace ChatLab.ViewModels
         [Reactive] public ObservableCollection<ChatResponseModel> ChatResponses { get; set; }
 
         [Reactive] public ObservableCollection<ChatItem> ChatItems { get; set; }
+        
+        [Reactive] public double ChatWidth { get; set; }
 
         #endregion
 
@@ -88,7 +90,9 @@ namespace ChatLab.ViewModels
 
             this.WhenActivated((CompositeDisposable disposables) =>
             {
-
+                this.WhenAnyValue(x => x.IsChatVisible,
+                    isVisible => isVisible ? 200 : 0)
+                .BindTo(this, x => x.ChatWidth);
             });
         }
 
@@ -119,13 +123,13 @@ namespace ChatLab.ViewModels
 
         private void StopMeasurement()
         {
-            Debug.WriteLine("Starting Measurement");
+            Debug.WriteLine("Stopping Measurement");
 
         }
 
         private void StartMeasurement()
         {
-            Debug.WriteLine("Stopping Measurement");
+            Debug.WriteLine("Starting Measurement");
 
         }
 
