@@ -77,6 +77,7 @@ namespace ChatLab.ViewModels
 
         #endregion
 
+        [Reactive] public bool IsBusy { get; set; }
 
         [Reactive] public ChatMessageModel CurrentMessage { get; set; }
 
@@ -87,11 +88,18 @@ namespace ChatLab.ViewModels
 
         public MainViewModel()
         {
+            var canSend = this.WhenAnyValue(x => x.IsBusy)
+                .Select(busy =>
+                {
+                    return !busy;
+                })
+                .DistinctUntilChanged();
+
             StartCommand = ReactiveCommand.Create(StartMeasurement);
             StopCommand = ReactiveCommand.Create(StopMeasurement);
             OpenChatCommand = ReactiveCommand.CreateFromTask(OpenChat);
             CloseChatCommand = ReactiveCommand.Create(CloseChat);
-            SendMessageCommand = ReactiveCommand.CreateFromTask(SendMessage);
+            SendMessageCommand = ReactiveCommand.CreateFromTask(SendMessage, canSend);
 
 
 
@@ -107,7 +115,9 @@ namespace ChatLab.ViewModels
         private async Task SendMessage()
         {
             Debug.WriteLine("Sending Message");
+            IsBusy = true;
             var response = await Prompt.Send(CurrentChatMessage.Message);
+            IsBusy = false;
             ChatItems.Add(
                         new ChatItem()
                         {
@@ -177,7 +187,9 @@ namespace ChatLab.ViewModels
             IsChatVisible = true;
             if (!isInitialized)
             {
+                IsBusy = true;
                 var firstMessage = await Prompt.Initialize();
+                IsBusy = false;
                 isInitialized = true;
                 ChatItems.Add(new()
                 {
