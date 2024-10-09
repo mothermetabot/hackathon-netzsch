@@ -138,4 +138,10 @@
   <data name="SendMessage" xml:space="preserve">
     <value>Nachricht Senden</value>
   </data>
+  <data name="NewMessage" xml:space="preserve">
+    <value>Neue Nachricht</value>
+  </data>
+  <data name="BusyMessage" xml:space="preserve">
+    <value>ChatLab denkt nach . . .</value>
+  </data>
 </root>

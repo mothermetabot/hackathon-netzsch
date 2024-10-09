@@ -143,12 +143,19 @@
                 <DockPanel Grid.Row="1"
                            Margin="0,10,0,0"
                            d:Width="250">
+                    <TextBlock Text="{lex:BLoc Key=BusyMessage}" 
+                               DockPanel.Dock="Top"
+                               d:Visibility="Visible"
+                               Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}"
+                               Margin="5,0,0,0" />
                     <TextBox x:Name="ChatMessageTextBox"
                              Text="{Binding CurrentChatMessage.Message}"
                              DockPanel.Dock="Top"
                              mat:HintAssist.Hint="{lex:BLoc NewMessage}"
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,5,0,0" />
                     <Button x:Name="SendMessageButton"
+                            MinWidth="200"
                             Grid.Column="2"
                             Margin="0,7,0,0"
                             mat:ButtonProgressAssist.IsIndeterminate="True"

@@ -70,11 +70,29 @@ namespace ChatLab.Win.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ChatLab is thinking . . ..
+        /// </summary>
+        public static string BusyMessage {
+            get {
+                return ResourceManager.GetString("BusyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close Chat.
         /// </summary>
         public static string CloseChat {
             get {
                 return ResourceManager.GetString("CloseChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Message.
+        /// </summary>
+        public static string NewMessage {
+            get {
+                return ResourceManager.GetString("NewMessage", resourceCulture);
             }
         }
         
