@@ -263,3 +263,6 @@ __pycache__/
 TlpMotorControl.Installer/Installs/
 Tca300Setup/Installs/
 Tca300Setup/ComponentsGenerated.wxs
+
+# vscode
+.vscode
