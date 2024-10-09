@@ -1,0 +1,62 @@
+﻿<Application x:Class="ChatLab.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ChatLab"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:CustomColorTheme BaseTheme="Light"
+                                                 PrimaryColor="#009384"
+                                                 SecondaryColor="#60DC96" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+
+                <!-- primary colors -->
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                    <SolidColorBrush x:Key="PrimaryHueLightBrush"
+                                     Color="#60DC96" />
+                    <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush"
+                                     Color="{StaticResource Primary100Foreground}" />
+                    <SolidColorBrush x:Key="PrimaryHueMidBrush"
+                                     Color="#009384" />
+                    <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush"
+                                     Color="{StaticResource Primary500Foreground}" />
+                    <SolidColorBrush x:Key="PrimaryHueDarkBrush"
+                                     Color="#007167" />
+                    <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush"
+                                     Color="{StaticResource Primary600Foreground}" />
+                    <SolidColorBrush x:Key="MaterialDesignLightBackground"
+                                     Color="#FFFAFAFA" />
+
+                </ResourceDictionary>
+
+                <!-- accent colors -->
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Red.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                    <SolidColorBrush x:Key="SecondaryAccentBrush"
+                                     Color="{StaticResource Primary400}" />
+                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush"
+                                     Color="{StaticResource Primary400Foreground}" />
+                </ResourceDictionary>
+
+                <!-- user defined colors -->
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="AlternatingRowBackgroundBrush"
+                                     Color="#E1F4ED" />
+                    <SolidColorBrush x:Key="AlternatingRowBackgroundHoverBrush"
+                                     Color="#FCFCFC" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                     Color="#009384" />
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
