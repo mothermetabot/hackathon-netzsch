@@ -14,5 +14,5 @@ internal record Request
 
     public string Model => "llama3.2:1b";
 
-    public IEnumerable<int> Context {get;}
+    public IEnumerable<int> Context { get; }
 }

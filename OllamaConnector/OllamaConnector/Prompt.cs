@@ -47,18 +47,19 @@ public static class Prompt
         try
         {
             
-        var (raw, _) = await SendAsync(INITIAL_PROMPT);
-
-        if(raw == null)  return fallback;
-
-        var response = JsonSerializer.Deserialize<InfoResponse>(raw.Response, Options);
-
-        if(response == null) return fallback;
-
-        return response.Params;
+            var (raw, _) = await SendAsync(INITIAL_PROMPT);
+    
+            if(raw == null)  return fallback;
+    
+            var response = JsonSerializer.Deserialize<InfoResponse>(raw.Response, Options);
+    
+            if(response == null) return fallback;
+    
+            return response.Params;
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            System.Console.WriteLine(e);
             return fallback;
         }
     }
@@ -81,21 +82,22 @@ public static class Prompt
         try
         {
 
-        var (response, json) = await SendAsync(prompt);
-
-        if(response == null) return fallbackObj;
-        var baseObj = JsonSerializer.Deserialize<ResponseBase>(response.Response, Options);
-        
-        if(baseObj == null)
-            return fallbackObj;
-        
-        baseObj._internalJson = json;
-        
-        return baseObj;
+            var (response, json) = await SendAsync(prompt);
+    
+            if(response == null) return fallbackObj;
+            var baseObj = JsonSerializer.Deserialize<ResponseBase>(response.Response, Options);
+            
+            if(baseObj == null)
+                return fallbackObj;
+            
+            baseObj._internalJson = json;
+            
+            return baseObj;
         }
-        catch(Exception)
+        catch(Exception e)
         {
-return fallbackObj;
+            System.Console.WriteLine(e);
+            return fallbackObj;
         }
     }
 
